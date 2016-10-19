@@ -69,7 +69,8 @@ class DayTableViewController: UITableViewController {
         
         let day = days[indexPath.row]
         
-        cell.dayLabel.text = day.date.capitalizedString + "           Total: $" + String(day.total)
+        cell.dayLabel.text = day.date.capitalizedString
+        cell.dayTotal.text = "Total " + String(day.total)
         
         return cell
     }

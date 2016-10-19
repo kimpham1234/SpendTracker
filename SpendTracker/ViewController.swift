@@ -16,7 +16,7 @@ class ViewController: UIViewController,UITextFieldDelegate, UIImagePickerControl
     
     @IBOutlet weak var itemNameField: UITextField!
     
-    @IBOutlet weak var itemPriceLabel: UILabel!
+    @IBOutlet weak var itemPriceLabel:  UILabel!
     
     @IBOutlet weak var itemPriceField: UITextField!
     
@@ -114,6 +114,8 @@ class ViewController: UIViewController,UITextFieldDelegate, UIImagePickerControl
             itemPriceField.enabled = true
             itemStatSwitch.enabled = true
         }
+        
+       
     }
     
     
