@@ -12,9 +12,10 @@ class MonthTableViewController: UITableViewController {
     
     //MARK: Properties
     var months = [Month]()
+    var startingMonth = NSDate()
     
     func loadSampleMonths(){
-        let month1 = Month(name: "June")!
+    /*    let month1 = Month(name: "June")!
         
         let day1 = Day(date: "day1 of month1")
         let photo1 = UIImage(named: "yes icon")!
@@ -25,7 +26,10 @@ class MonthTableViewController: UITableViewController {
         
         let month2 = Month(name: "July")!
         
-        months += [month1, month2]
+        months += [month1, month2]*/
+        if let saved = loadMonths() {
+            months += saved
+        }
     }
     
 
@@ -86,7 +90,8 @@ class MonthTableViewController: UITableViewController {
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
+        saveMonths()
     }
     
 
@@ -129,7 +134,12 @@ class MonthTableViewController: UITableViewController {
     //MARK: Action
     
     @IBAction func addMonth(sender: UIBarButtonItem) {
-        let month = Month(name: "Some Month")!
+        let date = startingMonth
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MMMM"
+        let monthName = formatter.stringFromDate(date)
+
+        let month = Month(name: String(monthName))!
         
         let newIndexPath = NSIndexPath(forRow: months.count, inSection: 0)
         
@@ -154,6 +164,18 @@ class MonthTableViewController: UITableViewController {
                 }
             }
         }
+        saveMonths()
+    }
+    
+    func saveMonths(){
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(months, toFile: Month.ArchiveURL!.path!)
+        if !isSuccessfulSave{
+            print("save went wrong")
+        }
+    }
+    
+    func loadMonths() -> [Month]?{
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(Month.ArchiveURL!.path!) as? [Month]
     }
     
     

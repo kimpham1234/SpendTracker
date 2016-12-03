@@ -11,7 +11,7 @@ import UIKit
 class DayTableViewController: UITableViewController {
 
     //MARK: Properties
-    
+    var date = NSDate()
     var days = [Day]()
     
     func loadSampleDays(){
@@ -138,7 +138,12 @@ class DayTableViewController: UITableViewController {
     //MARK: Action
     
     @IBAction func addDay(sender: UIBarButtonItem) {
-        let day = Day(date: "Some Day")
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MMM dd"
+        let dayName = formatter.stringFromDate(date)
+        
+        
+        let day = Day(date: dayName)
         
         let newIndexPath = NSIndexPath(forRow: days.count, inSection: 0)
         days += [day]

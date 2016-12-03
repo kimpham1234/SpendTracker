@@ -17,7 +17,7 @@ class SpendTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,6 +74,7 @@ class SpendTableViewController: UITableViewController {
             // Delete the row from the data source
             spends.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+         
             
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -141,9 +142,23 @@ class SpendTableViewController: UITableViewController {
                 spends.append(spend)
                 tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
             }
+            
         }
     }
     
+    
+    //MARK: NSCoding
+    func saveSpends(){
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(spends, toFile: Spend.ArchiveURL!.path!)
+        if !isSuccessfulSave{
+            print("Bla")
+        }
+        
+    }
+    
+    func loadSpends() -> [Spend]? {
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(Spend.ArchiveURL!.path!) as? [Spend]
+    }
     
     
     
